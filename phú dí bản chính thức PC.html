@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>phú dí V1.0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame(),dí1()">
+<script>
+function chết() {
+    console.log = alert('bạn đã bị phú đụ')
+}
+function thắng() {
+    console.log = alert('bạn đã trốn khỏi Phú')
+}
+function dừng() {
+    myGamePiece.speedX = 0
+    myGamePiece.speedY = 0
+}
+function dừng1() {
+    myGamePiece.speedX = 0
+}
+function dừng2() {
+    myGamePiece.speedY = 0
+}
+var myGamePiece;
+var myobject;
+var cửa;
+function startGame() {
+    myGamePiece = new component(30, 30, "red", 200, 120);
+    myGamePiece1 = new component(30, 30, "brown", 0, 120);
+    myobject = new component(1200,10,"black",0,80);
+    myobject1 = new component(1000,5,"black",0,170);
+    cửa = new component(10,90,"brown",650,180);
+    myobject2 = new component(140,470,"black",1100,90);
+    myobject3=new component(1100,60,"black",1,590);
+    myobject4=new component(5,360,"black",1005,180);
+    myobject5=new component(200,5,"black",800,535);
+    myobject6=new component(10,320,"black",650,270);
+    myobject7=new component(1000,5,"black",0,175);
+    myobject8=new component(5,360,"black",1000,180);
+    myobject9=new component(200,5,"black",800,530);
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 1200;
+        this.canvas.height = 650;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    stop : function() {
+    clearInterval(this.interval);
+  }
+}
+
+function component(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;        
+    }    
+    this.crashWith = function(otherobj) {
+    var myleft = this.x;
+    var myright = this.x + (this.width);
+    var mytop = this.y;
+    var mybottom = this.y + (this.height);
+    var otherleft = otherobj.x;
+    var otherright = otherobj.x + (otherobj.width);
+    var othertop = otherobj.y;
+    var otherbottom = otherobj.y + (otherobj.height);
+    var crash = true;
+    if ((mybottom < othertop) ||
+    (mytop > otherbottom) ||
+    (myright < otherleft) ||
+    (myleft > otherright)) {
+      crash = false;
+    }
+    return crash;
+  }
+}
+
+function updateGameArea() {
+ 
+    if (myGamePiece.crashWith(myobject7)) {
+    myGamePiece.y+=2;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    } 
+    if (myGamePiece1.crashWith(myobject2)) {
+    dí2();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    } 
+    if (myGamePiece.crashWith(myobject2)) {
+    myGamePiece.x-=1
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    } if (myGamePiece.crashWith(myGamePiece1)) {
+    myGameArea.stop();
+    chết();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject)) {
+    myGamePiece.y+=1;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject1)) {
+    myGamePiece.y-=2;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    
+    if (myGamePiece.crashWith(myobject3)) {
+    myGamePiece.y-=1
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece1.crashWith(myobject3)) {
+    dí3();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject4)) {
+    myGamePiece.x+=1;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject5)) {
+    myGamePiece.y+=1;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece1.crashWith(myobject6)) {
+    dí4();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject6)) {
+    myGamePiece.x+=1;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    
+    if (myGamePiece1.crashWith(myobject1)) {
+    myGamePiece1.speedY=0;
+    myGamePiece1=new component(100,90,"gray",660,180)
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject8)) {
+    myGamePiece.x-=2;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+    if (myGamePiece.crashWith(myobject9)) {
+    myGamePiece.y-=2;
+    dừng();
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    } if (myGamePiece.crashWith(cửa)) {
+    thắng();
+    cửa = component(0,0,"white",0,0);
+    myGamePiece1.speedX = 0;
+    } else {
+    myGameArea.clear();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+    myGamePiece1.update();
+    myGamePiece1.newPos();
+    myobject.update();
+    myobject1.update();
+    cửa.update();
+    myobject2.update();
+    myobject3.update();
+    myobject4.update();
+    myobject5.update();
+    myobject6.update();
+    myobject7.update();
+    myobject8.update();
+    myobject9.update();
+    }
+}
+function moveup() {
+    myGamePiece.speedY -= 0.5; 
+    myGamePiece.speedX = 0;
+}
+function stop() {
+    myGamePiece.speedY = 0; 
+    myGamePiece.speedX = 0;
+}
+function movedown() {
+    myGamePiece.speedY += 0.5; 
+    myGamePiece.speedX = 0;
+}
+
+function moveleft() {
+    myGamePiece.speedX -= 0.5; 
+    myGamePiece.speedY = 0;
+}
+
+function moveright() {
+    myGamePiece.speedX += 0.5;
+    myGamePiece.speedY = 0; 
+}
+function dí2() {
+    myGamePiece1.speedY = 0.58;
+    myGamePiece1.speedX = 0
+}
+function dí1() {
+    myGamePiece1.speedX = 0.2; 
+    myGamePiece1.speedY = 0; 
+}
+function dí3() {
+    myGamePiece1.speedY = 0;
+    myGamePiece1.speedX = -0.87;
+}
+function dí4() {
+    myGamePiece1.speedY = -0.25;
+    myGamePiece1.speedX = 0;
+}
+</script>
+<div style="text-align:center;width:480px;">
+  <button onclick="moveup()">^</button><br><br>
+  <button onclick="moveleft()"><</button>
+  <button onclick="stop()">-</button>
+  <button onclick="moveright()">></button><br><br>
+  <button onclick="movedown()">\/</button><br><br>
+</div>
+<p>bạn là cục màu đỏ,phú là cục màu nâu</p>
+
+
+</body>
+</html>
